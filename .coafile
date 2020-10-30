@@ -1,0 +1,83 @@
+[all]
+files = app/**.py, common/**.py, config/**.py, engine/**.py, helpers/**.py, models/**.py, modules/**.py, test/**.py
+
+indent_size = 4
+use_spaces = True
+max_line_length = 120
+max_lines_per_file = 1000
+file_naming_convention = snake
+
+space_between_ending_comma_and_closing_bracket = yes
+dedent_closing_brackets = yes
+blank_line_before_nested_class_or_def = yes
+
+[all.filenames]
+bears = FilenameBear
+
+[all.long-files]
+bears = LineCountBear
+ignore +=
+  engine/flights.py, # Fix and remove ignore!
+  engine/search_setup/handler.py,
+  modules/params.py
+
+[all.python]
+language = python
+
+[all.python.commented-code]
+bears = PyCommentedCodeBear
+
+[all.python.complexity]
+bears = RadonBear
+radon_ranks_major = F
+radon_ranks_normal = F
+ignore +=
+  engine/search_factories/model.py, # Fix and remove ignore!
+  modules/search_deeplinks.py, # Fix and remove ignore!
+  modules/reload_combinations.py, # Fix and remove ignore!
+
+[all.python.keywords]
+enabled = nope  # Code not ready yet
+bears = KeywordBear
+language = python
+keywords = TODO, FIXME, pdb.set_trace()  # Ignore KeywordBear
+
+[all.python.linelength]
+bears = LineLengthBear
+
+[all.python.quotes]
+enabled = nope  # https://github.com/coala/coala-bears/issues/1103
+bears = QuotesBear
+preferred_quotation = '
+
+[all.python.security]
+# code list: https://pypi.python.org/pypi/bandit
+bears = BanditBear
+bandit_skipped_tests =
+  B101, # assert_used
+  B301, # pickle (engine/preloaded_values.py)
+  B311, # random
+  B403, # import_pickle (engine/preloaded_values.py)
+  B108, # hardcoded_tmp_directory (engine/preloaded_vales.py)
+ignore +=
+  app/__init__.py, # Fix and remove ignore!
+  engine/create_response.py, # Fix and remove ignore!
+
+[all.python.unused-code]
+bears = PyUnusedCodeBear
+
+[all.markdown]
+files = *.md
+bears = MarkdownBear
+
+[all.spacing]
+bears = SpaceConsistencyBear
+
+[commit]
+bears = GitCommitBear
+shortlog_length = 72
+ignore_length_regex = (https?://|^    )
+
+[safety]
+bears = PySafetyBear
+files = *requirements.txt
