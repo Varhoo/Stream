@@ -1,6 +1,6 @@
 import requests
 
-url = "http://localhost:8080/device"
+url = "http://localhost:8000/device"
 
 X_TOKEN = "token_xxx_xxx"
 

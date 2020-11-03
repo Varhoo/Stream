@@ -19,7 +19,7 @@ ARG version
 ENV WEB_CONCURRENCY=9 \
     VERSION=$version
 
-CMD ["gunicorn", "--config", ".misc/gunicorn_conf.py", "vh.app:application"]
-EXPOSE 7779
+CMD ["gunicorn", "--config", "gunicorn_conf.py", "vh.run:application"]
+EXPOSE 8000
 
 LABEL name=stream version=dev

@@ -12,16 +12,21 @@ DEFAULT_SENCOR_TTL = 60
 
 class Base:
     def __init__(self, token):
-        self.url = "http://localhost:8080/push"
+        self.url = "http://localhost:8000/"
         self.headers = {
             "X-Token": token,
         }
 
     def push(self, data):
         try:
-            return requests.post(self.url, json=data, headers=self.headers).json()
+            return requests.post(self.url + "push", json=data, headers=self.headers).json()
         except requests.ConnectionError:
             pass
+
+    def get(self):
+        response = requests.get(self.url + "config", headers=self.headers)
+        response.raise_for_status()
+        return response.json()
 
 
 def load_frame(vidcap):
@@ -29,16 +34,6 @@ def load_frame(vidcap):
     if success:
         _, buffer = cv2.imencode(".jpg", frame)
         return buffer
-
-
-def check():
-    url = "http://localhost:8080/config"
-    headers = {
-        "X-Token": X_TOKEN,
-    }
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    return response.json()
 
 
 async def upload(cam_video):
@@ -54,6 +49,7 @@ async def upload(cam_video):
 
 
 async def refresh_temperature():
+    server = Base(X_TOKEN)
     while True:
         data = {
             "label": "info",
@@ -61,18 +57,19 @@ async def refresh_temperature():
             "data": {"temperature": 24, "humidity": 48},
             "timestamp": int(time())
         }
-        response = Base(X_TOKEN).push(data)
+        response = server.push(data)
         await asyncio.sleep(DEFAULT_SENCOR_TTL)
         return response
 
 
 async def refresh(camera=0):
     cam_video = cv2.VideoCapture(camera)
+    server = Base(X_TOKEN)
     while True:
         try:
             t1 = time()
             try:
-                config = check()["config"]
+                config = server.get()["config"]
             except requests.ConnectionError as e:
                 config["refresh"] = 10
             if cam_video:

@@ -10,4 +10,4 @@ def cli(loop, aiohttp_client):
 
 async def test_pong(cli):
     resp = await cli.get('/ping')
-    assert resp.status == 200
+    assert resp.status == 200  # Ignore B101
