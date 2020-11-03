@@ -117,5 +117,7 @@ def init():
     return app
 
 
+application = init()
+
 if __name__ == '__main__':
-    web.run_app(init())
+    web.run_app(application)
