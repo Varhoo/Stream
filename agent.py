@@ -78,7 +78,6 @@ async def refresh(camera=0):
             if cam_video:
                 await upload(cam_video)
             await asyncio.sleep(config["refresh"] - (time() - t1))
-            # print(">>", (time() - t1))
         except KeyboardInterrupt:
             break
 

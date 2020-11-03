@@ -1,5 +1,6 @@
 [all]
-files = app/**.py, common/**.py, config/**.py, engine/**.py, helpers/**.py, models/**.py, modules/**.py, test/**.py
+files = **.py
+ignore = venv/**
 
 indent_size = 4
 use_spaces = True
@@ -16,10 +17,6 @@ bears = FilenameBear
 
 [all.long-files]
 bears = LineCountBear
-ignore +=
-  engine/flights.py, # Fix and remove ignore!
-  engine/search_setup/handler.py,
-  modules/params.py
 
 [all.python]
 language = python
@@ -31,10 +28,6 @@ bears = PyCommentedCodeBear
 bears = RadonBear
 radon_ranks_major = F
 radon_ranks_normal = F
-ignore +=
-  engine/search_factories/model.py, # Fix and remove ignore!
-  modules/search_deeplinks.py, # Fix and remove ignore!
-  modules/reload_combinations.py, # Fix and remove ignore!
 
 [all.python.keywords]
 enabled = nope  # Code not ready yet
@@ -51,17 +44,7 @@ bears = QuotesBear
 preferred_quotation = '
 
 [all.python.security]
-# code list: https://pypi.python.org/pypi/bandit
 bears = BanditBear
-bandit_skipped_tests =
-  B101, # assert_used
-  B301, # pickle (engine/preloaded_values.py)
-  B311, # random
-  B403, # import_pickle (engine/preloaded_values.py)
-  B108, # hardcoded_tmp_directory (engine/preloaded_vales.py)
-ignore +=
-  app/__init__.py, # Fix and remove ignore!
-  engine/create_response.py, # Fix and remove ignore!
 
 [all.python.unused-code]
 bears = PyUnusedCodeBear
