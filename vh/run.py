@@ -51,7 +51,6 @@ async def image(request):
         raise web.HTTPNotFound
 
     for device in request.app["devices"].values():
-        print(device.uuid, session_hash, device.uuid == session_hash)
         if str(device.uuid) == str(session_hash):
             device.extend()
             frame = device.storage.get("frame")

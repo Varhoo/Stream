@@ -12,7 +12,7 @@ DEFAULT_SENCOR_TTL = 60
 
 class Base:
     def __init__(self, token):
-        self.url = "http://localhost:8000/"
+        self.url = "http://localhost:8080/"
         self.headers = {
             "X-Token": token,
         }
